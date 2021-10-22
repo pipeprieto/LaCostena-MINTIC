@@ -15,12 +15,14 @@
             <h2 class="animation a1">¡Hola de nuevo!</h2>
             <h4 class="animation a2">Bienvenido de vuelta</h4>
           </div>
-          <div class="form">
-            <input type="text" class="form-field animation a3" placeholder="Nombre Completo">
-            <input type="text" class="form-field animation a3" placeholder="Correo">
-            <input type="password" class="form-field animation a4" placeholder="Contraseña">
-            <input type="password" class="form-field animation a4" placeholder="Confirmar contraseña">
-            <button class="animation a6 button">Registrar</button>
+          <div>
+            <form class="form" action="/Crear" method="post">
+              <input type="text" name="fullname"class="form-field animation a3" placeholder="Nombre Completo">
+              <input type="text" name="correo" class="form-field animation a3" placeholder="Correo">
+              <input type="password" name="password" class="form-field animation a4" placeholder="Contraseña">
+              <input type="password" name="rptpassword" class="form-field animation a4" placeholder="Confirmar contraseña">
+              <button class="animation a6 button">Registrar</button>
+            </form>
           </div>
         </div>
         <div class="right">
