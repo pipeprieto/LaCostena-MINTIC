@@ -1,16 +1,16 @@
 from logging import debug
 from flask import Flask, render_template,request,redirect
 from flask_mysqldb import MySQL
+from flaskext.mysql import MySQL
 app = Flask(__name__)
+mysql=MySQL()
+
 
 app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']='Pipe1709_'
-app.config['MYSQL_DB']='Lacosteña'
-mysql=MySQL(app)
-
-
-
+app.config['MYSQL_DATABASE_DB']='lacosteña'
+mysql.init_app(app)
 
 @app.route("/")
 def login():
@@ -24,14 +24,15 @@ def registro():
 @app.route("/Crear", methods=["POST"])
 def create():
     if request.method == "POST":
-        fullname = request.form['fullname']
+        name = request.form['nombre']
         correo = request.form['correo']
         password = request.form['password']
         rptpassword=request.form['rptpassword']
         if rptpassword == password :
-            cur= mysql.connection.cursor()
-            cur.execute("INSERT INTO empleado (fullname,correo,password) VALUES (%s,%s,%s)",(fullname,correo,password))
-            mysql.connection.commit()
+            connection= mysql.connect()
+            cur = connection.cursor()
+            cur.execute("INSERT INTO empleado (nombre,correo,contraseña) VALUES (%s,%s,%s)",(name,correo,password))
+            connection.commit()
             return redirect("/")
         else:
             return "Error grave"
