@@ -33,6 +33,7 @@ def create():
             cur = connection.cursor()
             cur.execute("INSERT INTO empleado (nombre,correo,contraseña) VALUES (%s,%s,%s)",(name,correo,password))
             connection.commit()
+            results = cur.fetchall()
             return redirect("/")
         else:
             return "Error grave"
