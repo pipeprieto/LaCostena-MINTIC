@@ -1,6 +1,6 @@
 from logging import debug
-from flask import Flask, render_template,request,redirect
-from flask_mysqldb import MySQL
+from flask import Flask, render_template,request,redirect,session   
+from flask_mysqldb import MySQL,MySQLdb
 from flaskext.mysql import MySQL
 app = Flask(__name__)
 mysql=MySQL()
@@ -21,8 +21,13 @@ def login():
 def registro():
     return render_template("Registro.html")
 
-@app.route("/Crear", methods=["POST"])
+@app.route("/Crear", methods=["GET","POST"])
 def create():
+    if request.method == "GET":
+        connection = mysql.connect()
+        cur = connection.cursor()
+        cur.execute("SELECT * FROM empleado")
+        result = cur.fetchall()
     if request.method == "POST":
         name = request.form['nombre']
         correo = request.form['correo']
@@ -33,7 +38,7 @@ def create():
             cur = connection.cursor()
             cur.execute("INSERT INTO empleado (nombre,correo,contraseña) VALUES (%s,%s,%s)",(name,correo,password))
             connection.commit()
-            results = cur.fetchall()
+            # results = cur.fetchall()
             return redirect("/")
         else:
             return "Error grave"
